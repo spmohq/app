@@ -1,9 +1,414 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-   <title>Siva Prasad Mukherjee</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Prerequisite Learning System App | SPM.in.net</title>
+  <link rel="icon" href="spm.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient-start: #1f2937;
+      --bg-gradient-end: #111827;
+      --card-bg: rgba(31, 41, 55, 0.5);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-primary: #f9fafb;
+      --text-secondary: #d1d5db;
+      --text-heading: #ffffff;
+      --accent-primary: #22d3ee;
+      --accent-hover: #67e8f9;
+      --accent-success: #34d399;
+      --input-bg: #374151;
+      --code-bg: rgba(0, 0, 0, 0.3);
+      --shadow-color: rgba(0, 0, 0, 0.25);
+    }
+    body {
+      -webkit-user-select: none; /* Safari */
+      -ms-user-select: none; /* IE 10+ and Edge */
+      user-select: none; /* Standard syntax */
+    }
+    textarea, input {
+      -webkit-user-select: text; /* Safari */
+      -ms-user-select: text; /* IE 10+ and Edge */
+      user-select: text; /* Standard syntax */
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 850px;
+      width: 100%;
+      margin: 0 auto;
+      flex-grow: 1;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+    .prompts-container {
+      display: grid;
+      gap: 30px;
+    }
+    .prompt-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 var(--shadow-color);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .prompt-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px 0 var(--shadow-color);
+    }
+    .prompt-card h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text-heading);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    
+    /* Input Styling additions */
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .input-field {
+      width: 100%;
+      background-color: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 15px;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+    }
+    textarea.input-field {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .prompt-text {
+      background-color: var(--code-bg);
+      padding: 20px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: 'Source Code Pro', "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      flex-grow: 1;
+      margin-bottom: 20px;
+      border: 1px solid var(--card-border);
+    }
+    .copy-button {
+      align-self: flex-end;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--bg-gradient-end);
+      background-color: var(--accent-primary);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .copy-button:hover {
+      background-color: var(--accent-hover);
+      transform: scale(1.05);
+    }
+    .copy-button.copied {
+      background-color: var(--accent-success);
+    }
+    .copy-button .icon {
+      width: 16px;
+      height: 16px;
+    }
+    .copy-button .copied-icon {
+        display: none;
+    }
+    .copy-button.copied .copy-icon {
+        display: none;
+    }
+    .copy-button.copied .copied-icon {
+        display: inline-block;
+    }
+    .footer {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 15px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .prompt-card h2 {
+        font-size: 1.4rem;
+      }
+      .prompt-text {
+          font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
+  <div class="container">
+    <header>
+      <h1>The Prerequisite Learning System App</h1>
+      <p class="subtitle">understand why a topic feels difficult — and how to fix it</p>
+    </header>
+
+    <main>
+      <div class="prompts-container" id="promptsContainer">
+        
+        <!-- Input Section -->
+        <div class="prompt-card">
+            <h2>Your Details</h2>
+            
+            <div class="input-group">
+                <label class="input-label" for="ageInput">Please enter your age (to adjust the understanding level).</label>
+                <input type="number" id="ageInput" class="input-field" placeholder="e.g. 15">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="langInput">Insert your preferred language for the answer.</label>
+                <input type="text" id="langInput" class="input-field" placeholder="e.g. English, Spanish">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="topicInput">Insert your text Here</label>
+                <textarea id="topicInput" class="input-field" placeholder="e.g. Why is calculus so hard?"></textarea>
+            </div>
+        </div>
+
+        <!-- Prompt Output Section -->
+        <div class="prompt-card">
+          <h2>Prompt</h2>
+          <pre id="analysisPrompt" class="prompt-text">SYSTEM:
+You are the Prerequisite Learning System. Your job is to help the user understand why they are struggling with a topic by identifying which foundational concepts (prerequisites) they may not have fully learned. You teach missing foundations gently and clearly, boosting the learner’s confidence and sense of progress.
+
+IMPORTANT:
+Always reply entirely in the user’s preferred language, and tailor your explanations to the user’s age.
+
+USER INPUTS:
+— Age: [AGE]
+— Preferred Language: [LANGUAGE]
+— Topic: 
+[TOPIC]
+
+TASKS:
+1. Analyze the user’s topic and break it into the essential prerequisite concepts.
+2. List all prerequisites required to understand the topic.
+3. Identify which prerequisites the user is likely missing.
+   - Make reasonable guesses based on typical gaps for learners of the user’s age.
+   - Only ask one short diagnostic question if absolutely necessary.
+4. Teach each missing prerequisite in simple, beginner-friendly language with no unexplained jargon.
+5. Provide a short 3–5 step study plan to help the user learn the prerequisites in order.
+6. Re-explain the main topic clearly, assuming the user now understands the prerequisites.
+
+STYLE GUIDELINES:
+— Warm, encouraging, supportive
+— Beginner-friendly wording
+— Brief, clear explanations
+— No jargon unless defined simply
+— Reassure the user that difficulty is caused by missing foundations, not lack of intelligence
+— Adapt examples to the user’s age and preferred language
+
+OUTPUT FORMAT:
+1. List of essential prerequisites
+2. Mark which prerequisites the user is likely missing
+3. Teach the missing prerequisites in simple terms
+4. Provide a 3–5 step study plan
+5. Re-explain the main topic clearly and confidently</pre>
+          <button class="copy-button" data-target="analysisPrompt">
+            <svg class="icon copy-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" /></svg>
+            <svg class="icon copied-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+            <span class="button-text">Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const promptsContainer = document.getElementById('promptsContainer');
+      const ageInput = document.getElementById('ageInput');
+      const langInput = document.getElementById('langInput');
+      const topicInput = document.getElementById('topicInput');
+      const analysisPrompt = document.getElementById('analysisPrompt');
+
+      // The base template for the prompt
+      const basePromptTemplate = `SYSTEM:
+You are the Prerequisite Learning System. Your job is to help the user understand why they are struggling with a topic by identifying which foundational concepts (prerequisites) they may not have fully learned. You teach missing foundations gently and clearly, boosting the learner’s confidence and sense of progress.
+
+IMPORTANT:
+Always reply entirely in the user’s preferred language, and tailor your explanations to the user’s age.
+
+USER INPUTS:
+— Age: {{AGE}}
+— Preferred Language: {{LANGUAGE}}
+— Topic: 
+{{TOPIC}}
+
+TASKS:
+1. Analyze the user’s topic and break it into the essential prerequisite concepts.
+2. List all prerequisites required to understand the topic.
+3. Identify which prerequisites the user is likely missing.
+   - Make reasonable guesses based on typical gaps for learners of the user’s age.
+   - Only ask one short diagnostic question if absolutely necessary.
+4. Teach each missing prerequisite in simple, beginner-friendly language with no unexplained jargon.
+5. Provide a short 3–5 step study plan to help the user learn the prerequisites in order.
+6. Re-explain the main topic clearly, assuming the user now understands the prerequisites.
+
+STYLE GUIDELINES:
+— Warm, encouraging, supportive
+— Beginner-friendly wording
+— Brief, clear explanations
+— No jargon unless defined simply
+— Reassure the user that difficulty is caused by missing foundations, not lack of intelligence
+— Adapt examples to the user’s age and preferred language
+
+OUTPUT FORMAT:
+1. List of essential prerequisites
+2. Mark which prerequisites the user is likely missing
+3. Teach the missing prerequisites in simple terms
+4. Provide a 3–5 step study plan
+5. Re-explain the main topic clearly and confidently`;
+
+      // Function to update the prompt text based on inputs
+      function updatePrompt() {
+          let updatedPrompt = basePromptTemplate;
+          
+          const ageVal = ageInput.value.trim() !== '' ? ageInput.value : '[AGE]';
+          const langVal = langInput.value.trim() !== '' ? langInput.value : '[LANGUAGE]';
+          const topicVal = topicInput.value.trim() !== '' ? topicInput.value : '[TOPIC]';
+
+          updatedPrompt = updatedPrompt.replace('{{AGE}}', ageVal);
+          updatedPrompt = updatedPrompt.replace('{{LANGUAGE}}', langVal);
+          updatedPrompt = updatedPrompt.replace('{{TOPIC}}', topicVal);
+
+          analysisPrompt.textContent = updatedPrompt;
+      }
+
+      // Add event listeners for real-time updates
+      ageInput.addEventListener('input', updatePrompt);
+      langInput.addEventListener('input', updatePrompt);
+      topicInput.addEventListener('input', updatePrompt);
+
+      // Event delegation for the copy button
+      promptsContainer.addEventListener('click', (event) => {
+        const button = event.target.closest('.copy-button');
+        if (!button) return;
+
+        const targetId = button.dataset.target;
+        const textToCopy = document.getElementById(targetId).textContent;
+        const buttonTextEl = button.querySelector('.button-text');
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const originalText = buttonTextEl.textContent;
+          buttonTextEl.textContent = 'Copied!';
+          button.classList.add('copied');
+          
+          setTimeout(() => {
+            buttonTextEl.textContent = originalText;
+            button.classList.remove('copied');
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy text: ', err);
+          alert('Failed to copy text. Please try again.');
+        });
+      });
+    });
+  </script>
+
+  <footer class="footer">
+      <div style="padding-top: 30px;">&nbsp;</div>
+      <center><p>Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.</p></center>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ... your existing code for updating prompts ...
+      updatePrompts();
+    });
+  </script>
+  
+  <!-- START: Protection Script - ADD THIS ENTIRE SCRIPT BLOCK -->
+  <script>
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // Disable keyboard shortcuts for developer tools and view source
+    document.addEventListener('keydown', function(e) {
+      // Disable F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+      }
+      // Disable Ctrl+Shift+I
+      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault();
+      }
+      // Disable Ctrl+S
+      if (e.ctrlKey && e.key === 'S') {
+        e.preventDefault();
+      }
+      // Disable Ctrl+U
+      if (e.ctrlKey && e.key === 'U') {
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
