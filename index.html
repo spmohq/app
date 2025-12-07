@@ -410,5 +410,104 @@ OUTPUT FORMAT:
       }
     });
   </script>
+
+  <!-- START: WhatsApp sticky support button -->
+<style>
+  /* Sticky WhatsApp support button (right middle) */
+  .whatsapp-stick {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .whatsapp-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(180deg,#25D366 0%, #128C7E 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: 2px solid rgba(255,255,255,0.08);
+  }
+
+  .whatsapp-button:active,
+  .whatsapp-button:focus {
+    transform: scale(0.98);
+    outline: none;
+  }
+
+  .whatsapp-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.30);
+  }
+
+  .whatsapp-icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+
+  .whatsapp-label {
+    font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+    user-select: none;
+  }
+
+  /* Small screens: move to bottom-right to avoid covering content */
+  @media (max-width: 600px) {
+    .whatsapp-stick {
+      right: 14px;
+      top: auto;
+      bottom: 20px;
+      transform: none;
+    }
+  }
+</style>
+
+<!-- WhatsApp Sticky Button -->
+<a class="whatsapp-stick" 
+   href="https://wa.me/919564787946" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Contact support on WhatsApp"
+   id="whatsappSupport">
+
+  <span class="whatsapp-button" role="button" aria-hidden="true">
+    <!-- Inline WhatsApp SVG icon -->
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <path fill="#ffffff" d="M20.52 3.48A11.86 11.86 0 0012 0C5.373 0 .032 5.34.032 11.967c0 2.109.55 4.17 1.593 6.01L0 24l6.262-1.631A11.94 11.94 0 0012 23.934c6.627 0 11.968-5.34 11.968-11.967 0-3.199-1.244-6.205-3.448-8.487zM12 21.6a9.43 9.43 0 01-4.96-1.42l-.35-.21-3.72.97.99-3.62-.23-.37A9.335 9.335 0 012.7 11.97C2.7 7.02 6.96 2.76 12 2.76c2.52 0 4.89.98 6.67 2.76 1.78 1.78 2.76 4.15 2.76 6.66 0 5.04-4.26 9.3-9.33 9.33z"/>
+      <path fill="#ffffff" d="M17.07 14.01c-.24-.12-1.41-.7-1.63-.78-.22-.08-.37-.12-.53.12s-.61.78-.75.94c-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.62-1.19-1.37-1.33-1.61-.14-.24-.015-.37.11-.49.12-.12.26-.28.38-.42.13-.13.17-.22.26-.37.09-.14.045-.27-.02-.39-.06-.12-.53-1.28-.73-1.76-.19-.46-.38-.4-.53-.4-.14 0-.3-.01-.46-.01-.16 0-.42.06-.64.28-.22.23-.85.83-.85 2.01 0 1.18.87 2.32.99 2.48.12.16 1.71 2.7 4.15 3.78 2.44 1.07 2.44.72 2.88.67.44-.05 1.41-.56 1.61-1.1.2-.53.2-.98.14-1.07-.06-.09-.22-.13-.46-.25z"/>
+    </svg>
+  </span>
+
+  <span class="whatsapp-label">Support</span>
+</a>
+
+<script>
+  // Optional JS: update the number here (India format: 91 + 10 digits)
+  (function() {
+    var phoneNumber = '919564787946'; // <-- replace with your real Indian number
+    var linkEl = document.getElementById('whatsappSupport');
+    if (phoneNumber && linkEl) {
+      linkEl.href = 'https://wa.me/' + phoneNumber;
+    }
+  })();
+</script>
+<!-- END: WhatsApp sticky support button -->
 </body>
 </html>
